@@ -9,10 +9,10 @@ credit to [LanguageGroundedSemseg](https://github.com/RozDavid/LanguageGroundedS
 cd LanguageGroundedSemseg/
 # download dataset and checkpoint
 source download.sh
-# create conda environment
+# create conda environment and activate
+## conda env create -f environment.yml
 conda env create -f config/lg_semseg.yml
 conda activate lg_semseg
-
 ```
 
 Additionally, [MinkowskiEngine](https://github.com/NVIDIA/MinkowskiEngine) has to be installed manually with a specified CUDA version. 
@@ -29,6 +29,7 @@ pip install -U git+https://github.com/NVIDIA/MinkowskiEngine -v --no-deps --inst
 source inference.sh <TEST_NAME_POSTFIX> <ADDITIONAL_ARGS>
 # e.g. source inference.sh baseline-test
 ```
+output data will be dumped to ``./output/Scannet200Voxelization2cmDataset/Res16UNet34D-baseline-test/visualize/fulleval/`` in ``.ply`` and ``.txt`` format.
 
 ## Run Visualization
 
@@ -36,7 +37,7 @@ You can visualize plyfile after inferencing, just run
 
 ```sh
 python3 visualize.py <plt_filepath>
-# e.g. python3 visualize.py ./output/Scannet200Voxelization2cmDataset/Res16UNet34D-baseline-test/visualize/full_eval/scene0500_00.ply
+# e.g. python3 visualize.py ./output/Scannet200Voxelization2cmDataset/Res16UNet34D-baseline-test/visualize/fulleval/scene0500_00.ply
 ```
 
 ## Optional (Run Training)
