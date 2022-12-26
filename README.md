@@ -1,11 +1,9 @@
 # 3DCV_final
 ## Scannet200 - 3D Longtail Semantic Segmentation
 
-### Reference
-
 credit to [LanguageGroundedSemseg](https://github.com/RozDavid/LanguageGroundedSemseg)
 
-### Prerequisite
+## Prerequisite
 
 ```sh
 cd LanguageGroundedSemseg/
@@ -25,16 +23,32 @@ export CUDA_HOME=/usr/local/cuda-11.1
 pip install -U git+https://github.com/NVIDIA/MinkowskiEngine -v --no-deps --install-option="--blas=openblas"
 ```
 
-### Run Training
+## Run Inference
 
-#### Language Grounded Pretraining (stage 1)
+```sh
+source inference.sh <TEST_NAME_POSTFIX> <ADDITIONAL_ARGS>
+# e.g. source inference.sh baseline-test
+```
+
+## Run Visualization
+
+You can visualize plyfile after inferencing, just run
+
+```sh
+python3 visualize.py <plt_filepath>
+# e.g. python3 visualize.py ./output/Scannet200Voxelization2cmDataset/Res16UNet34D-baseline-test/visualize/full_eval/scene0500_00.ply
+```
+
+## Optional (Run Training)
+
+### Language Grounded Pretraining (stage 1)
 
 ```sh
 source training_scripts/text_representation_train.sh <BATCH_SIZE> <TRAIN_NAME_POSTFIX> <ADDITIONAL_ARGS>
 # e.g. source training_scripts/text_representation_train.sh 2 baseline-stage_1
 ```
 
-#### Downstream Semantic Segmentation (stage 2)
+### Downstream Semantic Segmentation (stage 2)
 
 For this stage modify environment variables ``PRETRAINED_WEIGHTS`` in ``training_scripts/train_models.sh``, then run
 
@@ -45,7 +59,7 @@ source training_scripts/train_models.sh <BATCH_SIZE> <LOSS_TYPE> <TRAIN_NAME_POS
 
 ``<LOSS_TYPE>`` can be ``focal`` or ``cross_entropy``
 
-#### Finetune Stage
+### Finetune Stage
 
 For this stage modify environment variables ``PRETRAINED_WEIGHTS`` in ``training_scripts/fine_tune_classifier.sh``, then run
 
@@ -54,22 +68,3 @@ source training_scripts/fine_tune_classifier.sh <BATCH_SIZE> <LOSS_TYPE> <SAMPLE
 # e.g. source training_scripts/fine_tune_classifier.sh 2 focal True baseline-finetune
 ```
 ``<SAMPLE_TAIL>`` can be ``True`` or ``False``
-
-### Run Inference
-
-```sh
-source inference.sh <TEST_NAME_POSTFIX> <ADDITIONAL_ARGS>
-# e.g. source inference.sh baseline-test
-```
-
-### Run Visualization
-
-You can visualize plyfile after inferencing, just run
-
-```sh
-python3 visualize.py <plt_filepath>
-# e.g. python3 visualize.py ./output/Re
-
-
-full_eval/scene0500_00.ply
-```
